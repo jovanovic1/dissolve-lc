@@ -1,6 +1,6 @@
 # app.py
  
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -30,9 +30,9 @@ def handle_post():
     if request.method == 'POST':
         html = request.form['html_payload']
         query = request.form['query']
-        return {"response":"hello, welcome to post request"}
+        return jsonify({"response":"hello, welcome to post request"})
     else:
-        return {"response":"hello, wrong input"}
+        return jsonify({"response":"hello, wrong input"})
 
 if __name__ == '__main__':
     app.run()
