@@ -30,10 +30,9 @@ def handle_post():
     if request.method == 'POST':
         html = request.form['html_payload']
         query = request.form['query']
-        print(html, query, metadata)
-        return "hello, welcome to post request"
+        return {"response":"hello, welcome to post request"}
     else:
-        return "hello, wrong input"
+        return {"response":"hello, wrong input"}
 
 if __name__ == '__main__':
     app.run()
