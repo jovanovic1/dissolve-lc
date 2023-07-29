@@ -15,7 +15,7 @@ in_memory_datastore = {
    "APL" : {"name": "APL", "publication_year": 1962, "contribution": "array processing"},
 }
 
-@app.get('/programming_languages')
+@app.route('/programming_languages',  methods=['GET'])
 def list_programming_languages():
    return {"programming_languages":list(in_memory_datastore.values())}
 
