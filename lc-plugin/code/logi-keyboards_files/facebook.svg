@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>facebook</title>
+    <defs>
+        <polygon id="path-1" points="0 0 32 0 32 32 0 32"></polygon>
+    </defs>
+    <g id="facebook" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="path-1"></g>
+            <path d="M32,16.0977814 C32,7.2072157 24.8365625,0 16,0 C7.1634375,0 0,7.2072157 0,16.0977814 C0,24.1326495 5.85096875,30.792352 13.5,32 L13.5,20.7510464 L9.4375,20.7510464 L9.4375,16.0977814 L13.5,16.0977814 L13.5,12.551239 C13.5,8.5167325 15.8886875,6.28819588 19.5434375,6.28819588 C21.2939688,6.28819588 23.125,6.60260567 23.125,6.60260567 L23.125,10.5641691 L21.1074375,10.5641691 C19.1198438,10.5641691 18.5,11.8050502 18.5,13.0780955 L18.5,16.0977814 L22.9375,16.0977814 L22.228125,20.7510464 L18.5,20.7510464 L18.5,32 C26.1490313,30.792352 32,24.1326495 32,16.0977814" id="Fill-1" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>

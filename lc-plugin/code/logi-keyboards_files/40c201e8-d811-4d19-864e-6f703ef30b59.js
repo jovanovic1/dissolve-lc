@@ -1,0 +1,1 @@
+!function(){"use strict";try{window.snaptr.cfg('40c201e8-d811-4d19-864e-6f703ef30b59',{"asc":[],"a":[],"ipg":"91","b":[],"t":"","v":"3.1.4-2306232019"})}catch(e){}}();
