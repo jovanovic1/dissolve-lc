@@ -10,6 +10,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.greeting == "hello") console.log(document.body);
   sendResponse({
     farewell: "goodbye",
-    htmlPayLoad: document.documentElement.outerHTML.toString(),
+    htmlPayLoad: document.documentElement.outerHTML,
   });
 });
