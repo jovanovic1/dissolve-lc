@@ -302,6 +302,21 @@
       "price": 1039.0,
       "oldPrice": 1099.0,
       "badge": "seller"
+    },
+    {
+      "id": 14,
+      "title": "Samsung Galaxy S20",
+      "image": "../images/product_s20.jpg",
+      "image_small": "../images/product_s20.jpg",
+      "attribute": "Mobile",
+      "description": "6.2-inch Dynamic AMOLED display with 120Hz refresh rate. Triple rear camera system with 64MP main camera, 12MP ultra-wide, and 12MP telephoto. 10MP front camera for stunning selfies. Powerful Exynos 990 processor. 5G capable. Long-lasting battery life.",
+      "brand": "Samsung",
+      "avgRating": 4.5,
+      "ratings": 1678,
+      "price": 849.0,
+      "oldPrice": 999.0,
+      "badge": "choice"
     }
+    
   ]
 }
