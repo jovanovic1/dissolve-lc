@@ -28,8 +28,7 @@ def list_programming_languages():
 @cross_origin()
 def handle_post():
     if request.method == 'POST':
-        html = request.form['html_payload']
-        query = request.form['query']
+        #response = funct(request)
         return jsonify({"response":"hello, welcome to post request"})
     else:
         return jsonify({"response":"hello, wrong input"})
