@@ -7,7 +7,6 @@ backoff==2.2.1
 blinker==1.6.2
 certifi==2023.7.22
 charset-normalizer==3.2.0
-chroma-hnswlib==0.7.1
 chromadb==0.4.3
 click==8.1.6
 coloredlogs==15.0.1
