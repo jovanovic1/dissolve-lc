@@ -1,7 +1,9 @@
 # app.py
- 
+import sys
+sys.path.append('..')
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_cors import CORS, cross_origin
+from lcplugin.agent.create_vectorstore import CreatorVectorStore
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -34,4 +36,22 @@ def handle_post():
         return jsonify({"response":"hello, wrong input"})
 
 if __name__ == '__main__':
-    app.run()
+    file_paths = ["../lcplugin/code/headsets.html",
+                    "../lcplugin/code/keyboard.html",
+                    "../lcplugin/code/mice.html",
+                    "../lcplugin/code/webcams.html",
+                    "../lcplugin/code/website.html",
+                    ]
+    urls = ["http://www.logitech.com/en-in/products/headsets.html",
+            "http://www.logitech.com/en-in/products/keyboard.html",
+            "http://www.logitech.com/en-in/products/mice.html",
+            "http://www.logitech.com/en-in/products/webcams.html",
+            "https://www.logitech.com/en-in"]
+    
+
+
+    for i in range(len(file_paths)):
+        vs = CreatorVectorStore(file_paths[i], urls[i])
+        vs.create_vectorstore()
+          
+    # app.run()
