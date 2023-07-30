@@ -31,7 +31,7 @@ def list_programming_languages():
 def handle_post():
     if request.method == 'POST':
         #response = funct(request)
-        data = request.form
+        data = request.get_json()
         print(data)
         return jsonify({"response":"hello, welcome to post request"})
     else:
@@ -39,13 +39,13 @@ def handle_post():
 
 if __name__ == '__main__':
     # file_paths = ["../lcplugin/code/headsets.html",
-    #                 "../lcplugin/code/keyboard.html",
+    #                 "../lcplugin/code/keyboards.html",
     #                 "../lcplugin/code/mice.html",
     #                 "../lcplugin/code/webcams.html",
     #                 "../lcplugin/code/website.html",
     #                 ]
     # urls = ["http://www.logitech.com/en-in/products/headsets.html",
-    #         "http://www.logitech.com/en-in/products/keyboard.html",
+    #         "http://www.logitech.com/en-in/products/keyboards.html",
     #         "http://www.logitech.com/en-in/products/mice.html",
     #         "http://www.logitech.com/en-in/products/webcams.html",
     #         "https://www.logitech.com/en-in"]
