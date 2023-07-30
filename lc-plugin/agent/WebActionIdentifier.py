@@ -52,8 +52,8 @@ example = """
                   <label class="h6" for="platform-checkbox-2"><span class="filter-title">Linux</span>
                   </label>
 
-    elements: ["input[data-filter-val="linux"]",
-        "input[data-filter-val="mac"]"]
+    elements: ['input[data-filter-val="linux"]',
+        'input[data-filter-val="mac"]']
         """ 
 
 base_context = context + example
