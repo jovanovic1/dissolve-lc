@@ -11,23 +11,42 @@ from typing import Optional, Type
 
 # You can provide a custom args schema to add descriptions or custom validation
 
-llm = OpenAI(openai_api_key='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',temperature=0)
+llm = OpenAI(openai_api_key='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',model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
 context = """
     You are an intelligent html understanding agent. You will be given a html page,
-    and a query about how to click, type, or select something on the page. You have to provide the 
-    correct element selector query and the correct action to take on that element.
+    and a query about what to click on the page. You have to provide the 
+    correct element selector string(ies) in list format
     """
 
 example = """
     One example is: 
 
-    input: <a href="https://www.amazon.in/gp/css/order-history?ref_=nav_orders_first" class="nav-a nav-a-2   nav-progressive-attribute" id="nav-orders" tabindex="0">
-    <span class="nav-line-1">Returns</span>
-    <span class="nav-line-2">&amp; Orders<span class="nav-icon nav-arrow"></span></span></a>
+    input: <div class="filter-wrapper-platform">
+	   <div class="plp-page-filters-v2 js-plp-filter-group pangea-inited" data-filter-id="platform">
+	      <h2>Platform</h2>
+	      <button class="toggle-visibility js-toggle-visibility" aria-label="Platform" aria-expanded="true"></button>
+	      <div class="inner js-inner" style="display: block;">
+	         <ul>
+	            <li class="option">
+                  <input name="platform-checkbox" type="checkbox" id="platform-checkbox-0" data-filter-group="platform" data-filter-val="windows" data-filter-title="Windows">
+                  <label class="h6" for="platform-checkbox-0"><span class="filter-title">Windows</span>
+                  </label>
+	            </li>
+	         
+	            <li class="option">
+                  <input name="platform-checkbox" type="checkbox" id="platform-checkbox-1" data-filter-group="platform" data-filter-val="mac" data-filter-title="Mac">
+                  <label class="h6" for="platform-checkbox-1"><span class="filter-title">Mac</span>
+                  </label>
+	            </li>
+	         
+	            <li class="option">
+                  <input name="platform-checkbox" type="checkbox" id="platform-checkbox-2" data-filter-group="platform" data-filter-val="linux" data-filter-title="Linux">
+                  <label class="h6" for="platform-checkbox-2"><span class="filter-title">Linux</span>
+                  </label>
 
-    element: document.querySelector('a[href="/gp/css/order-history?ref_=nav_orders_first"][class="nav-a nav-a-2   nav-progressive-attribute"][id="nav-orders"][tabindex="0"]');
-    action: click
+    elements: ["input[data-filter-val="linux"]",
+        "input[data-filter-val="mac"]"]
         """ 
 
 base_context = context + example

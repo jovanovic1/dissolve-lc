@@ -12,9 +12,10 @@ from langchain.callbacks.manager import (
 from langchain.chains.base import Chain
 from langchain.prompts.base import BasePromptTemplate
 from WebActionIdentifier import WebActionIdentifier
+from WebNavigator import WebNavigator
 
 
-class DissolveChain(Chain):
+class DissolveElementChain(Chain):
     """
     An example of a custom chain.
     """
@@ -116,21 +117,13 @@ class DissolveChain(Chain):
                         </ul>
                     </div>
             """
+
         
         #generate the output
         action_identifier = WebActionIdentifier()
         output = action_identifier._run(query=prompt_value.text, html_code=html)
+
         print(output)
-
-        # response = self.llm.generate_prompt(
-        #     [prompt_value], callbacks=run_manager.get_child() if run_manager else None
-        # )
-
-        # # If you want to log something about this run, you can do so by calling
-        # # methods on the `run_manager`, as shown below. This will trigger any
-        # # callbacks that are registered for that event.
-        # if run_manager:
-        #     run_manager.on_text("Log something about this run")
 
         return {self.output_key: output}
 
