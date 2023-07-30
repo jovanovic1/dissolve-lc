@@ -74,6 +74,7 @@ class WebActionIdentifier(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
+        print("### web action identifier ###")
         return llm(base_context + "\n"+query + "\n" + html_code)
 
     async def _arun(

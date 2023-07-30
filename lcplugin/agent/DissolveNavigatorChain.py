@@ -56,11 +56,11 @@ class DissolveNavigatorChain(Chain):
         inputs: Dict[str, Any],
         run_manager: Optional[CallbackManagerForChainRun] = None,
     ) -> Dict[str, str]:
-        print('loggg#1')
+        print("### Dissolve Navigator Chain ###")
+        # print('loggg#1')
         #format the prompt with given inputs
         prompt_value = self.prompt.format_prompt(**inputs)
-        print('loggg#2')
-        #get the html code relevant to the input
+        # print('loggg#2')
         
         #navigator instance
         navigator = WebNavigator()
@@ -68,12 +68,11 @@ class DissolveNavigatorChain(Chain):
         #if navigator
         if inputs['url'] != "https://www.logitech.com/en-in":
             #do nothing, no navigation
-            print("here")
-            newurl = ""
+            newUrl = ""
         else:
             newUrl = navigator._run(prompt_value.text)
         
-        print('found url',newUrl)
+        print('traverse to url: ',newUrl)
 
         return {self.output_key: newUrl}
 

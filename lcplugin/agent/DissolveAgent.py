@@ -30,7 +30,7 @@ navigationTemplate = """
 You help the user to navigate from the current webpage url to the required webpage url using the sitemap. For example: if the current user webpage url is "https://www.logitech.com/en-in" and the user says
 that they want to see keyboards which are compatible with iPad then you have to return the url of the page
 "http://www.logitech.com/en-in/products/keyboards.html". You have to strictly respond with a url ONLYYYYY where the user, 
-this is a non-negotiable. 
+this is a non-negotiable. Only provide me with the url no other text.
 For example just resply with: http://www.logitech.com/en-in/products/keyboards.html
 """
 
@@ -41,38 +41,38 @@ navigationPrompt = PromptTemplate(
 
 llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
-class DissolveAgent:
-    def __init__(self, query: str, url: str):
-        self.query = query
-        self.url = url
+# class DissolveAgent:
+#     def __init__(self, query: str, url: str):
+#         self.query = query
+#         self.url = url
 
-    def _call(self):
-    navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
-    elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
+    # def _call(self):
+navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
+elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
 
     # for dev only
-    # query = "filter a keyboard by platform Windows"
-    # url = "https://www.logitech.com/en-in"
+query = "show me all keyboards which work with windows and linux"
+query = "show me webcams with HD recording"
+url = "https://www.logitech.com/en-in"
 
-    print('log#2')
-    newUrl = navigationChain.run({
-        'query':self.query,
-        'url':self.url
+print("User on this url: ",url)
+print("User query: ",query)
+
+newUrl = navigationChain.run({
+    'query':query,
+    'url':url
+})
+
+elementList = elementSelectorChain.run({
+    'query':query,
+    'url':newUrl
     })
 
-    print('log#1')
+output = {
+    'redirectUrl':newUrl,
+    'selectorString':elementList
+}
 
-    elementList = elementSelectorChain.run({
-        'query':self.query,
-        'url':newUrl
-        })
+print(output)
 
-    print('log#3')
-    output = {
-        'redirectUrl':newUrl,
-        'selectorString':elementList
-    }
-
-    print(output)
-
-    return output
+# return output

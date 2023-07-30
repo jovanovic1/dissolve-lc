@@ -17,12 +17,7 @@ from html_retriever import HtmlRetrieval
 
 
 class DissolveElementChain(Chain):
-    """
-    An example of a custom chain.
-    """
-
     prompt: BasePromptTemplate
-    """Prompt object to use."""
     llm: BaseLanguageModel
     output_key: str = "text"  #: :meta private:
 
@@ -58,6 +53,7 @@ class DissolveElementChain(Chain):
         run_manager: Optional[CallbackManagerForChainRun] = None,
     ) -> Dict[str, str]:
         #format the prompt with given inputs
+        print("### Dissolve Element Chain###")
         prompt_value = self.prompt.format_prompt(**inputs)
         #get the html code relevant to the input
 
@@ -65,21 +61,14 @@ class DissolveElementChain(Chain):
             output = []
             return {self.output_key: output}
 
-        print(inputs['query'])
-        
         retriever = HtmlRetrieval(inputs['query'], inputs['url'])
 
-        print("log##3")
         html = retriever.retrieve_html()
 
-        print("log##4")
-        print(html)
-        
-        # #generate the output
         action_identifier = WebActionIdentifier()
         output = action_identifier._run(query=prompt_value.text, html_code=html.metadata['HTML'])
 
-        # print(output)
+        print("click on these elements: \n"+output)
 
         return {self.output_key: output}
 

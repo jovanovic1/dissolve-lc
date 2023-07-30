@@ -15,7 +15,7 @@ class HtmlRetrieval:
         persist_directory = 'vectordb'
         embeddings = OpenAIEmbeddings()
 
-        print("url is: ", url)
+        # print("url is: ", url)
 
         db = Chroma(persist_directory=persist_directory, collection_name=url, embedding_function=embeddings)
         

@@ -21,7 +21,6 @@ llm = OpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',t
 base_prompt = "You have to strictly respond with the appropriate url where the user should be taken from base url to fulfill their query, this is a non-negotiable. For example: http://www.logitech.com/en-in/products/keyboards.html"
 
 def load_xml_file_as_string(file_path):
-    print('loggg###1.1')
     try:
         with open(file_path, 'r') as file:
             xml_string = file.read()
@@ -55,6 +54,7 @@ class WebNavigator(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
+        print("### web navigator tool ###")
         return llm(query + base_prompt + single_xml)
 
     async def _arun(
