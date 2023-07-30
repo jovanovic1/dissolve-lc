@@ -68,5 +68,5 @@ class CreatorVectorStore:
 
         Chroma.from_documents(documents=texts, 
                                embedding=embeddings,
-                               collection_name="collection_name",
+                               collection_name=self.url,
                                persist_directory=persist_directory)
