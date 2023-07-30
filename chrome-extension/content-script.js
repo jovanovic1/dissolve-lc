@@ -1,71 +1,35 @@
 console.log("DISSOLVE: content script loaded");
 
-function runQuerySelector(jsonData) {
-  for (let i = 0; i < jsonData.selectorString.length; i++) {
-    document.querySelector(jsonData.selectorString[i]).click();
-  }
-}
-
-function executeQuery(jsonData) {
-  console.log("DISSOLVE:executing query", jsonData.selectorString);
-
-  if (data.redirectUrl != "") {
-    window.location.replace(jsonData.redirectUrl);
-    setTimeout(runQuerySelector(jsonData), 3000);
-  } else {
-    runQuerySelector(jsonData);
-  }
-}
-
-async function postToServer(query, htmlPayLoad, tabUrl) {
-  console.log("DISSOLVE:tried posting");
-  const url = "https://13.232.247.37:8080/handle_post";
-
-  const data = {
-    query: query,
-    htmlPayLoad: htmlPayLoad,
-    tabUrl: tabUrl,
-  };
-
-  let jsonData;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data), // Convert the data to a valid JSON string
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok.");
-    }
-
-    jsonData = await response.json();
-    console.log("DISSOLVE:Response:", jsonData);
-  } catch (error) {
-    console.error("DISSOLVE:Error:", error);
-  }
-  executeQuery(jsonData);
-}
-
-chrome.runtime.onMessage.addListener(async function (
-  request,
-  sender,
-  sendResponse
-) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log(
     "DISSOLVE: message received",
     sender.tab
       ? "from a content script:" + sender.tab.url
       : "from the extension"
   );
-  let htmlPayLoad = document.documentElement.outerHTML;
-
-  await postToServer(request.query, htmlPayLoad, request.tabUrl);
   console.log("DISSOLVE:Dissolve is ready!!!");
+  if (request.action == "fetch html") {
+    console.log("DISSOLVE:fetching html");
+    sendResponse({
+      farewell: "goodbye",
+      htmlPayLoad: document.documentElement.outerHTML,
+    });
+  }
+  if (request.action == "execute url query") {
+    console.log("DISSOLVE:executing url query", request.redirectUrl);
+    if (request.redirectUrl != "") {
+      window.location.replace(request.redirectUrl);
+    }
+    sendResponse({
+      farewell: "goodbye",
+    });
+  }
 
-  sendResponse({
-    farewell: "goodbye",
-  });
+  if (request.action == "execute selector query") {
+    console.log("DISSOLVE:executing selector query", request.selectorString);
+    document.querySelector(request.selectorString).click();
+    sendResponse({
+      farewell: "goodbye",
+    });
+  }
 });
