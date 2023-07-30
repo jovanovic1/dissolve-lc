@@ -5,11 +5,21 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter, Language
 import tiktoken
+import hashlib
 
 class CreatorVectorStore:
     def __init__(self, file_path: str, url: str):
         self.file_path = file_path
         self.url = url
+
+    def encode_url_to_int(self, url_string):
+        # Using SHA-256 hash algorithm
+        sha256_hash = hashlib.sha256(url_string.encode()).hexdigest()
+
+        # Convert the hexadecimal hash to an integer
+        encoded_int = int(sha256_hash, 16)
+
+        return encoded_int
 
     def create_vectorstore(self):
         load_dotenv()
@@ -66,7 +76,9 @@ class CreatorVectorStore:
 
         persist_directory = 'vectordb'
 
+        encoded_url = self.encode_url_to_int(self.url)
+
         Chroma.from_documents(documents=texts, 
                                embedding=embeddings,
-                               collection_name=self.url,
+                               collection_name=encoded_url,
                                persist_directory=persist_directory)
