@@ -61,21 +61,25 @@ class DissolveElementChain(Chain):
         prompt_value = self.prompt.format_prompt(**inputs)
         #get the html code relevant to the input
 
-        print(prompt_value)
-
+        if inputs['url'] == 'https://www.logitech.com/en-in':
+            output = []
+            return {self.output_key: output}
+        
         retriever = HtmlRetrieval(prompt_value.text, inputs['url'])
 
+        print("log##3")
         html = retriever.retrieve_html()
 
+        print("log##4")
         print(html)
         
         # #generate the output
-        # action_identifier = WebActionIdentifier()
-        # output = action_identifier._run(query=prompt_value.text, html_code=html)
+        action_identifier = WebActionIdentifier()
+        output = action_identifier._run(query=prompt_value.text, html_code=html.metadata['HTML'])
 
         # print(output)
 
-        # return {self.output_key: output}
+        return {self.output_key: output}
 
     async def _acall(
         self,

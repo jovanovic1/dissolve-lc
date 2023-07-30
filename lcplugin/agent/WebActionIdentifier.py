@@ -18,7 +18,7 @@ openai_api_key = os.getenv('OPENAI_API_KEY')
 
 # You can provide a custom args schema to add descriptions or custom validation
 
-llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
+llm = OpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
 context = """
     You are an intelligent html understanding agent. You will be given a html page,

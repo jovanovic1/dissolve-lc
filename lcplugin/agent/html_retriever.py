@@ -15,11 +15,12 @@ class HtmlRetrieval:
         persist_directory = 'vectordb'
         embeddings = OpenAIEmbeddings()
 
+        print("url is: ", url)
+
         db = Chroma(persist_directory=persist_directory, collection_name=url, embedding_function=embeddings)
         
-        print("hello")
         docs = db.similarity_search(self.query)
         # print(docs[0])
-        return docs[0:3]
+        return docs[0]
 # htmlr = HtmlRetrieval("Click on the link to navigate to bluetooth headsets page", "http://www.logitech.com/en-in/products/headsets.html")
 # htmlr.retrieve_html()
