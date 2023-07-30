@@ -31,7 +31,7 @@ def list_programming_languages():
 def handle_post():
     if request.method == 'POST':
         #response = funct(request)
-        data = request.form()
+        data = request.form
         print(data)
         return jsonify({"response":"hello, welcome to post request"})
     else:
