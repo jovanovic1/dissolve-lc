@@ -40,33 +40,36 @@ navigationPrompt = PromptTemplate(
 
 llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
-class DissolveAgent:
-    def __init__(self, query: str, url: str):
-        self.query = query
-        self.url = url
+# class DissolveAgent:
+#     def __init__(self, query: str, url: str):
+#         self.query = query
+#         self.url = url
 
-    def _call(self):
-        navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
-        elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
+#     def _call(self):
+navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
+elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
 
-        elementList = elementSelectorChain.run({
-            'query':self.query,
-            'url':self.url
-            })
+query = "buy a keyboard which is compatible with mac & linux",
+url = "https://www.logitech.com/en-in"
 
-        newUrl = navigationChain.run({
-            'query':self.query,
-            'url':self.url
-        })
+elementList = elementSelectorChain.run({
+    'query':query,
+    'url':url
+    })
 
-        output = {
-            'redirectUrl':newUrl,
-            'selectorString':elementList
-        }
+newUrl = navigationChain.run({
+    'query':query,
+    'url':url
+})
 
-        print(output)
+output = {
+    'redirectUrl':newUrl,
+    'selectorString':elementList
+}
 
-        return output
+print(output)
+
+        # return output
 
 
 
