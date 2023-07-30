@@ -61,7 +61,9 @@ class DissolveElementChain(Chain):
         prompt_value = self.prompt.format_prompt(**inputs)
         #get the html code relevant to the input
 
-        retriever = HtmlRetrieval(prompt_value, inputs['url'])
+        print(prompt_value)
+
+        retriever = HtmlRetrieval(prompt_value.text, inputs['url'])
 
         html = retriever.retrieve_html()
 
