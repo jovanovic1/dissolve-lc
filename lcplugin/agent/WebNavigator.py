@@ -10,25 +10,44 @@ from langchain.callbacks.manager import (
 from langchain.tools import BaseTool
 from typing import Optional, Type
 from langchain.document_loaders import UnstructuredXMLLoader
+import xml.etree.ElementTree as ET
 
 # load dotenv
 load_dotenv()
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
-llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
+llm = OpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
-sitemap = UnstructuredXMLLoader(
-    "../data/logi-sitemap.xml",
-)
-docs = sitemap.load()
+base_prompt = "You have to strictly respond with the appropriate url where the user should be taken from base url to fulfill their query, this is a non-negotiable. For example: http://www.logitech.com/en-in/products/keyboards.html"
 
-class WebActionSchema(BaseModel):
+def load_xml_file_as_string(file_path):
+    print('loggg###1.1')
+    try:
+        with open(file_path, 'r') as file:
+            xml_string = file.read()
+            return xml_string
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+
+# get sitemap string from xml:
+xml_path = "../data/logi-sitemap.xml"
+xml_string = load_xml_file_as_string(xml_path)
+tree = ET.ElementTree(ET.fromstring(xml_string))
+
+string_list = []
+for item in tree.iter('url'):
+    string_list.append(item.text)
+
+single_xml = ''.join(string_list)
+
+class WebNavigSchema(BaseModel):
     query: str = Field(description="base user query by the user")
 
 class WebNavigator(BaseTool):
-    name = "web_action_identifier"
-    description = "identify the correct element selector and action to take on a given web page"
-    args_schema: Type[WebActionSchema] = WebActionSchema
+    name = "Web_navigator"
+    description = "this will output a single line which will contain the url of the target page"
+    args_schema: Type[WebNavigSchema] = WebNavigSchema
 
     def _run(
         self, 
@@ -36,7 +55,7 @@ class WebNavigator(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        return llm(query + "sitemap is: "+ docs[0].page_content)
+        return llm(query + base_prompt + single_xml)
 
     async def _arun(
         self, 

@@ -27,10 +27,11 @@ elementSelectorPrompt = PromptTemplate(
 )
 
 navigationTemplate = """
-You help the user to navigate from the current webpage url to the required webpage url using the sitemap tool. You have to return the url of the page
-that needs to be opened on the user browser. For example: if the current user webpage url is "https://www.logitech.com/en-in" and the user says
+You help the user to navigate from the current webpage url to the required webpage url using the sitemap. For example: if the current user webpage url is "https://www.logitech.com/en-in" and the user says
 that they want to see keyboards which are compatible with iPad then you have to return the url of the page
-"http://www.logitech.com/en-in/products/keyboards.html" so that the user can see all the keyboards available on the store.
+"http://www.logitech.com/en-in/products/keyboards.html". You have to strictly respond with a url ONLYYYYY where the user, 
+this is a non-negotiable. 
+For example just resply with: http://www.logitech.com/en-in/products/keyboards.html
 """
 
 navigationPrompt = PromptTemplate(
@@ -52,16 +53,20 @@ elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt
 query = "buy a keyboard which is compatible with mac & linux",
 url = "https://www.logitech.com/en-in"
 
-elementList = elementSelectorChain.run({
-    'query':query,
-    'url':url
-    })
-
+print('log#2')
 newUrl = navigationChain.run({
     'query':query,
     'url':url
 })
 
+print('log#1')
+
+elementList = elementSelectorChain.run({
+    'query':query,
+    'url':newUrl
+    })
+
+print('log#3')
 output = {
     'redirectUrl':newUrl,
     'selectorString':elementList
