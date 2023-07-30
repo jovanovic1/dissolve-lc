@@ -3,7 +3,7 @@ import sys
 sys.path.append('..')
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_cors import CORS, cross_origin
-# from lcplugin.agent.create_vectorstore import CreatorVectorStore
+from lcplugin.agent.create_vectorstore import CreatorVectorStore
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -33,27 +33,29 @@ def handle_post():
         #response = funct(request)
         data = request.get_json()
         print(data)
-        return jsonify({"response":"hello, welcome to post request"})
+        return  jsonify({"selectorString":
+                ['span.color-swatch-inner[style*="background-image:url(https://resource.logitech.com/w_32,h_32,c_fill,b_white,q_auto,f_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/swatch/rose.jpg?v=1)"]'],
+                "redirectUrl": "",})
     else:
-        return jsonify({"response":"hello, wrong input"})
+        return jsonify({"response":"wrong input"})
 
 if __name__ == '__main__':
-    # file_paths = ["../lcplugin/code/headsets.html",
-    #                 "../lcplugin/code/keyboards.html",
-    #                 "../lcplugin/code/mice.html",
-    #                 "../lcplugin/code/webcams.html",
-    #                 "../lcplugin/code/website.html",
-    #                 ]
-    # urls = ["http://www.logitech.com/en-in/products/headsets.html",
-    #         "http://www.logitech.com/en-in/products/keyboards.html",
-    #         "http://www.logitech.com/en-in/products/mice.html",
-    #         "http://www.logitech.com/en-in/products/webcams.html",
-    #         "https://www.logitech.com/en-in"]
+    file_paths = ["../lcplugin/code/headsets.html",
+                    "../lcplugin/code/keyboards.html",
+                    "../lcplugin/code/mice.html",
+                    "../lcplugin/code/webcams.html",
+                    "../lcplugin/code/website.html",
+                    ]
+    urls = ["http://www.logitech.com/en-in/products/headsets.html",
+            "http://www.logitech.com/en-in/products/keyboards.html",
+            "http://www.logitech.com/en-in/products/mice.html",
+            "http://www.logitech.com/en-in/products/webcams.html",
+            "https://www.logitech.com/en-in"]
     
 
 
-    # for i in range(len(file_paths)):
-    #     vs = CreatorVectorStore(file_paths[i], urls[i])
-    #     vs.create_vectorstore()
+    for i in range(len(file_paths)):
+        vs = CreatorVectorStore(file_paths[i], urls[i])
+        vs.create_vectorstore()
           
     app.run()
