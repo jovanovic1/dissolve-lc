@@ -63,10 +63,13 @@ class DissolveNavigatorChain(Chain):
         #navigator instance
         navigator = WebNavigator()
 
+        print(inputs['url'])
+
         #if navigator
-        if input['url'] != "https://www.logitech.com/en-in":
+        if inputs['url'] != "https://www.logitech.com/en-in":
             #do nothing, no navigation
             print("here")
+            newurl = ""
         else:
             newUrl = navigator._run(prompt_value.text)
         
@@ -82,23 +85,6 @@ class DissolveNavigatorChain(Chain):
         # Your custom chain logic goes here
         # This is just an example that mimics LLMChain
         prompt_value = self.prompt.format_prompt(**inputs)
-
-        # Whenever you call a language model, or another chain, you should pass
-        # a callback manager to it. This allows the inner run to be tracked by
-        # any callbacks that are registered on the outer run.
-        # You can always obtain a callback manager for this by calling
-        # `run_manager.get_child()` as shown below.
-        # response = await self.llm.agenerate_prompt(
-        #     [prompt_value], callbacks=run_manager.get_child() if run_manager else None
-        # )
-
-        # If you want to log something about this run, you can do so by calling
-        # methods on the `run_manager`, as shown below. This will trigger any
-        # callbacks that are registered for that event.
-        # if run_manager:
-        #     await run_manager.on_text("Log something about this run")
-
-        # return {self.output_key: response.generations[0][0].text}
 
     @property
     def _chain_type(self) -> str:

@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import UnstructuredHTMLLoader
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
@@ -9,9 +12,12 @@ from langchain.callbacks.manager import (
 from langchain.tools import BaseTool
 from typing import Optional, Type
 
-# You can provide a custom args schema to add descriptions or custom validation
+# load dotenv
+load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY')
 
-llm = OpenAI(openai_api_key='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',temperature=0)
+# You can provide a custom args schema to add descriptions or custom validation
+llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
 # html_code
 html = """

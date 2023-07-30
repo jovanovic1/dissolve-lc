@@ -1,4 +1,7 @@
+import os
+from dotenv import load_dotenv
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel, validator, Field
 from langchain.callbacks.manager import (
     AsyncCallbackManagerForToolRun,
@@ -8,9 +11,11 @@ from langchain.tools import BaseTool
 from typing import Optional, Type
 from langchain.document_loaders import UnstructuredXMLLoader
 
-# You can provide a custom args schema to add descriptions or custom validation
+# load dotenv
+load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY')
 
-llm = OpenAI(openai_api_key='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',temperature=0)
+llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
 sitemap = UnstructuredXMLLoader(
     "../data/logi-sitemap.xml",
@@ -31,7 +36,7 @@ class WebNavigator(BaseTool):
         run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        return llm(query + "sitemap is: "+ docs[0])
+        return llm(query + "sitemap is: "+ docs[0].page_content)
 
     async def _arun(
         self, 

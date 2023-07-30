@@ -13,6 +13,7 @@ from langchain.chains.base import Chain
 from langchain.prompts.base import BasePromptTemplate
 from WebActionIdentifier import WebActionIdentifier
 from WebNavigator import WebNavigator
+from html_retriever import HtmlRetrieval
 
 
 class DissolveElementChain(Chain):
@@ -59,73 +60,22 @@ class DissolveElementChain(Chain):
         #format the prompt with given inputs
         prompt_value = self.prompt.format_prompt(**inputs)
         #get the html code relevant to the input
-        html = """
 
-            <div class="filter-wrapper-platform">
-                <div class="plp-page-filters-v2 js-plp-filter-group pangea-inited" data-filter-id="platform">
-                    <h2>Platform</h2>
-                    <button class="toggle-visibility js-toggle-visibility" aria-label="Platform" aria-expanded="true"></button>
-                    <div class="inner js-inner" style="display: block;">
-                        <ul>
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-0" data-filter-group="platform" data-filter-val="windows" data-filter-title="Windows">
-                            <label class="h6" for="platform-checkbox-0"><span class="filter-title">Windows</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-1" data-filter-group="platform" data-filter-val="mac" data-filter-title="Mac">
-                            <label class="h6" for="platform-checkbox-1"><span class="filter-title">Mac</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-2" data-filter-group="platform" data-filter-val="linux" data-filter-title="Linux">
-                            <label class="h6" for="platform-checkbox-2"><span class="filter-title">Linux</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-3" data-filter-group="platform" data-filter-val="chrome" data-filter-title="Chrome">
-                            <label class="h6" for="platform-checkbox-3"><span class="filter-title">Chrome</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-4" data-filter-group="platform" data-filter-val="surface" data-filter-title="Surface">
-                            <label class="h6" for="platform-checkbox-4"><span class="filter-title">Surface</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-5" data-filter-group="platform" data-filter-val="android" data-filter-title="Android">
-                            <label class="h6" for="platform-checkbox-5"><span class="filter-title">Android</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-6" data-filter-group="platform" data-filter-val="ios" data-filter-title="iOS">
-                            <label class="h6" for="platform-checkbox-6"><span class="filter-title">iOS</span>
-                            </label>
-                            </li>
-                        
-                            <li class="option">
-                            <input name="platform-checkbox" type="checkbox" id="platform-checkbox-7" data-filter-group="platform" data-filter-val="ipados" data-filter-title="iPadOS">
-                            <label class="h6" for="platform-checkbox-7"><span class="filter-title">iPadOS</span>
-                            </label>
-                            </li>
-                        </ul>
-                    </div>
-            """
+        print(prompt_value)
 
+        retriever = HtmlRetrieval(prompt_value.text, inputs['url'])
+
+        html = retriever.retrieve_html()
+
+        print(html)
         
-        #generate the output
-        action_identifier = WebActionIdentifier()
-        output = action_identifier._run(query=prompt_value.text, html_code=html)
+        # #generate the output
+        # action_identifier = WebActionIdentifier()
+        # output = action_identifier._run(query=prompt_value.text, html_code=html)
 
-        print(output)
+        # print(output)
 
-        return {self.output_key: output}
+        # return {self.output_key: output}
 
     async def _acall(
         self,

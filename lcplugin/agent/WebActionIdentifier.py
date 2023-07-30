@@ -1,4 +1,7 @@
+import os
+from dotenv import load_dotenv
 from langchain.document_loaders import UnstructuredHTMLLoader
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 from pydantic import BaseModel, validator, Field
@@ -9,9 +12,13 @@ from langchain.callbacks.manager import (
 from langchain.tools import BaseTool
 from typing import Optional, Type
 
+# load dotenv
+load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY')
+
 # You can provide a custom args schema to add descriptions or custom validation
 
-llm = OpenAI(openai_api_key='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',model_name='gpt-3.5-turbo-16k-0613',temperature=0)
+llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
 context = """
     You are an intelligent html understanding agent. You will be given a html page,
@@ -45,8 +52,8 @@ example = """
                   <label class="h6" for="platform-checkbox-2"><span class="filter-title">Linux</span>
                   </label>
 
-    elements: ["input[data-filter-val="linux"]",
-        "input[data-filter-val="mac"]"]
+    elements: ['input[data-filter-val="linux"]',
+        'input[data-filter-val="mac"]']
         """ 
 
 base_context = context + example

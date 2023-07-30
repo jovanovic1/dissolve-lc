@@ -3,3 +3,4 @@ uploads
 images
 package-lock.json
 img
+**.env
