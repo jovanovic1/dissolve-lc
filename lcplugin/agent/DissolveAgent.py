@@ -41,48 +41,38 @@ navigationPrompt = PromptTemplate(
 
 llm = ChatOpenAI(openai_api_key=openai_api_key,model_name='gpt-3.5-turbo-16k-0613',temperature=0)
 
-# class DissolveAgent:
-#     def __init__(self, query: str, url: str):
-#         self.query = query
-#         self.url = url
+class DissolveAgent:
+    def __init__(self, query: str, url: str):
+        self.query = query
+        self.url = url
 
-#     def _call(self):
-navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
-elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
+    def _call(self):
+    navigationChain = DissolveNavigatorChain(llm=llm,prompt=navigationPrompt,verbose=True)
+    elementSelectorChain = DissolveElementChain(llm=llm,prompt=elementSelectorPrompt,verbose=True)
 
-query = "buy a keyboard which is compatible with mac & linux",
-url = "https://www.logitech.com/en-in"
+    # for dev only
+    # query = "filter a keyboard by platform Windows"
+    # url = "https://www.logitech.com/en-in"
 
-print('log#2')
-newUrl = navigationChain.run({
-    'query':query,
-    'url':url
-})
-
-print('log#1')
-
-elementList = elementSelectorChain.run({
-    'query':query,
-    'url':newUrl
+    print('log#2')
+    newUrl = navigationChain.run({
+        'query':self.query,
+        'url':self.url
     })
 
-print('log#3')
-output = {
-    'redirectUrl':newUrl,
-    'selectorString':elementList
-}
+    print('log#1')
 
-print(output)
+    elementList = elementSelectorChain.run({
+        'query':self.query,
+        'url':newUrl
+        })
 
-        # return output
+    print('log#3')
+    output = {
+        'redirectUrl':newUrl,
+        'selectorString':elementList
+    }
 
+    print(output)
 
-
-# overall_chain = SequentialChain(
-#     chains=[navigationChain, elementSelectorChain],
-#     input_variables=["query", "url"],
-#     # Here we return multiple variables
-#     output_variables=["newUrl", "elements"],
-#     verbose=True)
-
-# overall_chain({"title":"Tragedy at sunset on the beach", "era": "Victorian England"})
+    return output

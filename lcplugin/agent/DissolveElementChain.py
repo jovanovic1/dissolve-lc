@@ -64,8 +64,10 @@ class DissolveElementChain(Chain):
         if inputs['url'] == 'https://www.logitech.com/en-in':
             output = []
             return {self.output_key: output}
+
+        print(inputs['query'])
         
-        retriever = HtmlRetrieval(prompt_value.text, inputs['url'])
+        retriever = HtmlRetrieval(inputs['query'], inputs['url'])
 
         print("log##3")
         html = retriever.retrieve_html()
