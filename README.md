@@ -30,12 +30,9 @@ Dissolve is a new way to interact with e-commerce websites, inspired by [Adept](
 2. Create a `.env` file and put your `OPENAI_API_KEY`.
 3. Navigate to `DissolveAgent.py` and uncomment the following lines of code.
 <pre>
-```python
+
 query = "buy a keyboard which is compatible with mac & linux"
 url = "https://www.logitech.com/en-in"
-```
+
 </pre>
 4. Run `DissolveAgent.py` to simulate the prototype in your terminal.
-
-## What I Learned
-We experimented with Langchain agents to make the solution general purpose but realised that agents are not production ready yet. Therefore, we resorted to using a chain i.e. a deterministic sequence of LLM instances to create a more reliable prototype.
