@@ -2,11 +2,7 @@
 
 ## ⚡ Action assistant for e-commerce websites ⚡
 
-Dissolve is a new way to interact with e-commerce websites, inspired by [Adept](https://www.adept.ai/). This is part of Gen AI Buildathon organised by The Product Folks.
-
-- Team Name: Dissolve
-- Problem Statement: How do you reimagine e-commerce applications using natural language interfaces instead of GUI?
-- Team Leader Email: yogender.eth@gmail.com
+Dissolve is a new way to interact with e-commerce websites, inspired by [Adept](https://www.adept.ai/). 
 
 ## A Brief of the Prototype
 
@@ -30,9 +26,7 @@ Dissolve is a new way to interact with e-commerce websites, inspired by [Adept](
 2. Create a `.env` file and put your `OPENAI_API_KEY`.
 3. Navigate to `DissolveAgent.py` and uncomment the following lines of code.
 <pre>
-
 query = "buy a keyboard which is compatible with mac & linux"
 url = "https://www.logitech.com/en-in"
-
 </pre>
 4. Run `DissolveAgent.py` to simulate the prototype in your terminal.
